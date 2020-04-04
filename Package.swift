@@ -10,10 +10,10 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/IBM-Swift/BlueSocket", from: "1.0.46"),
+        .package(url: "https://github.com/jakeheis/CSSH", from: "1.0.3")
     ],
     targets: [
-        .systemLibrary(name: "CSSH", pkgConfig: "libssh2"),
-        .target(name: "Shout", dependencies: ["CSSH", "Socket"]),
+        .target(name: "Shout", dependencies: ["Socket"]),
         .testTarget(name: "ShoutTests", dependencies: ["Shout"]),
     ]
 )
