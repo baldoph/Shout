@@ -177,6 +177,26 @@ public class SFTP {
         }
         try handleSFTPCommandResult(result)
     }
+
+    /// Create missing directories for each path components.
+    ///
+    /// - Parameters:
+    ///   - existingPath: the path guaranted to exist, to reduce overhead
+    ///   - components: the path components to check and add if missing
+    /// - Throws: SSHError if folder can't be created
+    public func createIntermediateDirectories(_ existingPath: String = "/", components: [String]) throws {
+        let existingPath = existingPath.hasPrefix("/") ? existingPath : "/\(existingPath)"
+        guard let pathUrl = URL(string: existingPath) else {
+            throw SSHError.genericError("path is not valid")
+        }
+
+        var pathBuilder = pathUrl
+
+        for component in components {
+            pathBuilder = pathBuilder.appendingPathComponent(component, isDirectory: true)
+            try? createDirectory(pathBuilder.path)
+        }
+    }
     
     /// Rename a file on the remote server
     ///
