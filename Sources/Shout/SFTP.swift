@@ -152,7 +152,7 @@ public class SFTP {
         var offset = 0
         while offset < data.count {
             let upTo = Swift.min(offset + SFTPHandle.bufferSize, data.count)
-            let subdata = data.subdata(in: offset ..< upTo)
+            let subdata = NSData(data: data).subdata(with: NSRange(location: offset, length: upTo - offset))// data.subdata(in: offset ..< upTo)
             if subdata.count > 0 {
                 switch sftpHandle.write(subdata) {
                 case .written(let bytesSent):
