@@ -291,8 +291,16 @@ public class SFTP {
     
     
     
-    deinit {
+    private var didShutDownSession = false
+
+    public func shutdownSession() {
+        didShutDownSession = true
         libssh2_sftp_shutdown(sftpSession)
+    }
+
+
+    deinit {
+        assert(didShutDownSession, "you must call -shutdownSession on deinit")
     }
     
 }
