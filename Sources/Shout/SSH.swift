@@ -36,7 +36,7 @@ public class SSH {
     }
     
     let session: Session
-    private let sock: Socket
+    public let sock: Socket
     
     public var ptyType: PtyType? = nil
     
